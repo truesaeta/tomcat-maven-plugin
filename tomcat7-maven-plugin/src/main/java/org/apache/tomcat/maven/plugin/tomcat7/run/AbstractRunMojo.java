@@ -247,6 +247,13 @@ public abstract class AbstractRunMojo
     private File tomcatWebXml;
 
     /**
+     * overriding the providing web.xml of the application
+     * <b>This override the application web.xml located in WEB-INF/</b>
+     */
+    @Parameter(property = "maven.tomcat.appWebXml")
+    private String appWebXml;
+    
+    /**
      * Set this to true to allow Maven to continue to execute after invoking
      * the run goal.
      *
@@ -1239,6 +1246,11 @@ public abstract class AbstractRunMojo
                     embeddedTomcat.getEngine().setParentClassLoader( getTomcatClassLoader() );
                 }
 
+
+                if(appWebXml != null && ctx.getServletContext() != null) {
+                    ctx.addParameter("kkkkkkkk", appWebXml);
+                }
+                
                 embeddedTomcat.start();
 
                 Properties portProperties = new Properties();
